@@ -13,15 +13,12 @@ import retrofit2.Response
 
 class MainViewModel : ViewModel() {
 
-    private val _query = MutableLiveData<String>()
-    val query: LiveData<String> = _query
     private val _listUsers = MutableLiveData<List<ItemsItem>>()
     val listUsers: LiveData<List<ItemsItem>> = _listUsers
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
     companion object{
-        private const val EXTRA_QUERY = "extra_query"
         private const val TAG = "MainViewModel"
     }
 
@@ -40,7 +37,7 @@ class MainViewModel : ViewModel() {
                         _listUsers.value = responseBody.items
                     }
                     else {
-                        Log.e("MainActivity", "onFailure: ${response.message()}")
+                        Log.e(TAG, "onFailure: ${response.message()}")
                     }
                 }
             }
