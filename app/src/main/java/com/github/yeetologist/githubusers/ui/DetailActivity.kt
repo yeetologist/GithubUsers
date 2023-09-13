@@ -17,6 +17,10 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.topAppBar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true);
+
         val detailViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailViewModel::class.java]
 
         intent.getStringExtra(EXTRA_LOGIN)?.let { detailViewModel.findDetailUser(it) }
@@ -36,6 +40,7 @@ class DetailActivity : AppCompatActivity() {
         binding.tvFollowers.text = getString(R.string.followers_label,userData.followers)
         binding.tvFollowing.text = getString(R.string.following_label,userData.following)
         binding.tvName.text = userData.name
+        binding.topAppBar.title = userData.login
     }
 
     companion object {

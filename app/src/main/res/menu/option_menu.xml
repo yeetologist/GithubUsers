@@ -6,6 +6,6 @@
             android:id="@+id/menu1"
             android:icon="@drawable/ic_settings"
             android:title="@string/menu_settings"
-            app:showAsAction="ifRoom" />
+            app:showAsAction="always" />
     </group>
 </menu>
