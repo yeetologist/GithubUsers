@@ -13,7 +13,6 @@ import retrofit2.Response
 class DetailViewModel : ViewModel() {
 
     companion object{
-        private const val EXTRA_QUERY = "extra_query"
         private const val TAG = "DetailViewModel"
     }
 
