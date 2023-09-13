@@ -1,5 +1,6 @@
 package com.github.yeetologist.githubusers.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -77,6 +78,14 @@ class FollowFragment : Fragment() {
         val adapter = FollowAdapter()
         adapter.submitList(items)
         binding.rvUsers.adapter = adapter
+        adapter.setOnItemClickListener(object : FollowAdapter.OnItemClickListener{
+            override fun onItemClick(searchResult: FollowUserResponseItem) {
+                val intent = Intent(activity, DetailActivity::class.java)
+                intent.putExtra(DetailActivity.EXTRA_LOGIN,searchResult.login)
+                startActivity(intent)
+            }
+
+        })
     }
 
     private fun showLoading(isLoading: Boolean) {
