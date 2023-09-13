@@ -1,5 +1,6 @@
 package com.github.yeetologist.githubusers.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -47,6 +48,13 @@ class MainActivity : AppCompatActivity() {
         val adapter = SearchAdapter()
         adapter.submitList(items)
         binding.rvUsers.adapter = adapter
+        adapter.setOnItemClickListener(object : SearchAdapter.OnItemClickListener {
+            override fun onItemClick(searchResult: ItemsItem) {
+                val intent = Intent(this@MainActivity,DetailActivity::class.java)
+                intent.putExtra(DetailActivity.EXTRA_LOGIN, searchResult.login)
+                startActivity(intent)
+            }
+        })
     }
 
     private fun showLoading(isLoading: Boolean) {
