@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.yeetologist.githubusers.data.response.ItemsItem
 import com.github.yeetologist.githubusers.databinding.ActivityMainBinding
+import com.github.yeetologist.githubusers.ui.adapter.SearchAdapter
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

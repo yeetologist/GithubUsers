@@ -1,4 +1,4 @@
-package com.github.yeetologist.githubusers.ui
+package com.github.yeetologist.githubusers.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,14 +6,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.github.yeetologist.githubusers.data.response.ItemsItem
+import com.github.yeetologist.githubusers.data.response.FollowUserResponseItem
 import com.github.yeetologist.githubusers.databinding.ItemSearchBinding
 
-class SearchAdapter : ListAdapter<ItemsItem, SearchAdapter.MyViewHolder>(DIFF_CALLBACK)  {
+class FollowAdapter : ListAdapter<FollowUserResponseItem, FollowAdapter.MyViewHolder>(DIFF_CALLBACK) {
+
     private var onItemClickListener: OnItemClickListener? = null
 
     interface OnItemClickListener {
-        fun onItemClick(searchResult: ItemsItem)
+        fun onItemClick(searchResult: FollowUserResponseItem)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -21,12 +22,23 @@ class SearchAdapter : ListAdapter<ItemsItem, SearchAdapter.MyViewHolder>(DIFF_CA
     }
 
     class MyViewHolder (private val binding: ItemSearchBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(searchResult: ItemsItem){
+        fun bind(searchResult: FollowUserResponseItem){
             binding.tvUsername.text = searchResult.login
             Glide.with(binding.root)
                 .load(searchResult.avatarUrl)
                 .into(binding.ivProfile)
             binding.tvUrl.text = searchResult.htmlUrl
+        }
+    }
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FollowUserResponseItem>() {
+            override fun areItemsTheSame(oldItem: FollowUserResponseItem, newItem: FollowUserResponseItem): Boolean {
+                return oldItem == newItem
+            }
+            override fun areContentsTheSame(oldItem: FollowUserResponseItem, newItem: FollowUserResponseItem): Boolean {
+                return oldItem == newItem
+            }
         }
     }
 
@@ -42,14 +54,5 @@ class SearchAdapter : ListAdapter<ItemsItem, SearchAdapter.MyViewHolder>(DIFF_CA
             onItemClickListener?.onItemClick(result)
         }
     }
-    companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ItemsItem>() {
-            override fun areItemsTheSame(oldItem: ItemsItem, newItem: ItemsItem): Boolean {
-                return oldItem == newItem
-            }
-            override fun areContentsTheSame(oldItem: ItemsItem, newItem: ItemsItem): Boolean {
-                return oldItem == newItem
-            }
-        }
-    }
+
 }

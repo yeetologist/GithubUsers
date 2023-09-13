@@ -1,8 +1,9 @@
-package com.github.yeetologist.githubusers.ui
+package com.github.yeetologist.githubusers.ui.adapter
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.github.yeetologist.githubusers.ui.FollowFragment
 
 class SectionsPagerAdapter(activity: AppCompatActivity, private var stringExtra: String?) : FragmentStateAdapter(activity) {
     override fun getItemCount(): Int {
@@ -10,7 +11,7 @@ class SectionsPagerAdapter(activity: AppCompatActivity, private var stringExtra:
     }
 
     override fun createFragment(position: Int): Fragment {
-        val fragment = stringExtra?.let { FollowFragment.newInstance(it,position) }
+        val fragment = stringExtra?.let { FollowFragment.newInstance(it, position) }
         return fragment as Fragment
     }
 }

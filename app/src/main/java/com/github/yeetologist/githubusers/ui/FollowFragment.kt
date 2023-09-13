@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.yeetologist.githubusers.data.response.FollowUserResponseItem
 import com.github.yeetologist.githubusers.databinding.FragmentFollowingBinding
+import com.github.yeetologist.githubusers.ui.adapter.FollowAdapter
 
 private const val ARG_LOGIN = "arg_login"
 private const val ARG_INDEX = "arg_index"
@@ -44,7 +45,7 @@ class FollowFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFollowingBinding.inflate(inflater,container,false)
         return _binding!!.root
     }
