@@ -30,12 +30,12 @@ class SearchAdapter : ListAdapter<ItemsItem, SearchAdapter.MyViewHolder>(DIFF_CA
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchAdapter.MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemSearchBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return MyViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: SearchAdapter.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val result = getItem(position)
         holder.bind(result)
         holder.itemView.setOnClickListener {
