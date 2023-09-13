@@ -9,6 +9,7 @@ import com.github.yeetologist.githubusers.R
 import com.github.yeetologist.githubusers.data.response.DetailUserResponse
 import com.github.yeetologist.githubusers.databinding.ActivityDetailBinding
 import com.github.yeetologist.githubusers.ui.adapter.SectionsPagerAdapter
+import com.github.yeetologist.githubusers.ui.viewmodel.DetailViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailActivity : AppCompatActivity() {

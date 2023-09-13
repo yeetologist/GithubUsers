@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.yeetologist.githubusers.data.response.FollowUserResponseItem
 import com.github.yeetologist.githubusers.databinding.FragmentFollowingBinding
 import com.github.yeetologist.githubusers.ui.adapter.FollowAdapter
+import com.github.yeetologist.githubusers.ui.viewmodel.FollowViewModel
 
 private const val ARG_LOGIN = "arg_login"
 private const val ARG_INDEX = "arg_index"

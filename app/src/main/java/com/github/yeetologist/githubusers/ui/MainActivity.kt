@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.yeetologist.githubusers.data.response.ItemsItem
 import com.github.yeetologist.githubusers.databinding.ActivityMainBinding
 import com.github.yeetologist.githubusers.ui.adapter.SearchAdapter
+import com.github.yeetologist.githubusers.ui.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

@@ -1,4 +1,4 @@
-package com.github.yeetologist.githubusers.ui
+package com.github.yeetologist.githubusers.ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
