@@ -1,7 +1,7 @@
 package com.github.yeetologist.githubusers.data.retrofit
 
-import com.github.yeetologist.githubusers.data.response.FollowUserResponse
 import com.github.yeetologist.githubusers.data.response.DetailUserResponse
+import com.github.yeetologist.githubusers.data.response.FollowUserResponseItem
 import com.github.yeetologist.githubusers.data.response.SearchResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -22,15 +22,15 @@ interface ApiService {
         @Path("username") username: String
     ) : Call<DetailUserResponse>
 
-    @GET("users/{username}/followers")
+    @GET("users/{username}/following")
     @Headers("Authorization: Bearer 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")
     fun getFollowing (
         @Path("username") username: String
-    ) : Call<FollowUserResponse>
+    ) : Call<List<FollowUserResponseItem>>
 
-    @GET("users/{username}/following")
+    @GET("users/{username}/followers")
     @Headers("Authorization: Bearer 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")
     fun getFollowers (
         @Path("username") username: String
-    ) : Call<FollowUserResponse>
+    ) : Call<List<FollowUserResponseItem>>
 }

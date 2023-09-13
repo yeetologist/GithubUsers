@@ -6,9 +6,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="tab_text_1">Repos</string>
-    <string name="tab_text_2">Following</string>
-    <string name="tab_text_3">Followers</string>
+    <string name="tab_text_1">Following</string>
+    <string name="tab_text_2">Followers</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="followers_label">Followers\n%1$d</string>
     <string name="following_label">Following\n%1$d</string>

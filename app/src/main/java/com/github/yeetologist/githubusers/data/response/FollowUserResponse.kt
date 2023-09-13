@@ -2,12 +2,6 @@ package com.github.yeetologist.githubusers.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class FollowUserResponse(
-
-	@field:SerializedName("FollowUserResponse")
-	val followUserResponse: List<FollowUserResponseItem>
-)
-
 data class FollowUserResponseItem(
 
 	@field:SerializedName("gists_url")
