@@ -14,6 +14,7 @@ import com.github.yeetologist.githubusers.data.response.ItemsItem
 import com.github.yeetologist.githubusers.databinding.ActivityMainBinding
 import com.github.yeetologist.githubusers.ui.adapter.SearchAdapter
 import com.github.yeetologist.githubusers.ui.viewmodel.MainViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -59,6 +60,10 @@ class MainActivity : AppCompatActivity() {
             showLoading(it)
         }
 
+        mainViewModel.resultCount.observe(this){
+            if (it == 0) Snackbar.make(binding.root, "User not found", Snackbar.LENGTH_LONG).show()
+        }
+
         binding.rvUsers.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             var currentPage = 2
             var isLoading = false
@@ -83,7 +88,6 @@ class MainActivity : AppCompatActivity() {
                     isLoading = false
                 }
             }
-
         })
     }
 
@@ -109,5 +113,4 @@ class MainActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
-
 }
