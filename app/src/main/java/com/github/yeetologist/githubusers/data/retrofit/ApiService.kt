@@ -26,12 +26,14 @@ interface ApiService {
     @GET("users/{username}/following")
     @Headers("Authorization: Bearer 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")
     fun getFollowing (
-        @Path("username") username: String
+        @Path("username") username: String,
+        @Query("page") page: Int = 1
     ) : Call<List<FollowUserResponseItem>>
 
     @GET("users/{username}/followers")
     @Headers("Authorization: Bearer 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")
     fun getFollowers (
-        @Path("username") username: String
+        @Path("username") username: String,
+        @Query("page") page: Int = 1
     ) : Call<List<FollowUserResponseItem>>
 }

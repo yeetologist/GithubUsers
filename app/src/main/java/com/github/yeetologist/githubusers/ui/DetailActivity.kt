@@ -53,6 +53,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setDetailUser(userData: DetailUserResponse) {
+        following = userData.following
+        followers = userData.followers
         binding.tvLogin.text = userData.login
         Glide.with(binding.root)
             .load(userData.avatarUrl)
@@ -65,6 +67,8 @@ class DetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_LOGIN = "extra_login"
+        var following = 0
+        var followers = 0
         @StringRes
         private val TAB_TITLES = intArrayOf(
             R.string.tab_text_1,

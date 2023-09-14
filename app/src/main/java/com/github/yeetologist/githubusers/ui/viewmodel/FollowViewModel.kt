@@ -21,9 +21,9 @@ class FollowViewModel : ViewModel() {
         private const val TAG = "FollowingViewModel"
     }
 
-    fun findFollowing(login: String){
+    fun findFollowing(login: String, page: Int = 1){
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getFollowing(login)
+        val client = ApiConfig.getApiService().getFollowing(login, page)
         client.enqueue(object : Callback<List<FollowUserResponseItem>>{
             override fun onResponse(
                 call: Call<List<FollowUserResponseItem>>,
@@ -32,8 +32,10 @@ class FollowViewModel : ViewModel() {
                 _isLoading.value = false
                 val responseBody = response.body()
                 if (response.isSuccessful){
+                    val currentList = _listUsers.value?.toMutableList() ?: mutableListOf()
                     if (responseBody != null){
-                        _listUsers.value = responseBody
+                        currentList.addAll(responseBody)
+                        _listUsers.value = currentList
                     }
                 }
             }
@@ -45,9 +47,9 @@ class FollowViewModel : ViewModel() {
         })
     }
 
-    fun findFollowers(login: String){
+    fun findFollowers(login: String, page: Int = 1){
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getFollowers(login)
+        val client = ApiConfig.getApiService().getFollowers(login, page)
         client.enqueue(object : Callback<List<FollowUserResponseItem>>{
             override fun onResponse(
                 call: Call<List<FollowUserResponseItem>>,
@@ -56,8 +58,10 @@ class FollowViewModel : ViewModel() {
                 _isLoading.value = false
                 val responseBody = response.body()
                 if (response.isSuccessful){
+                    val currentList = _listUsers.value?.toMutableList() ?: mutableListOf()
                     if (responseBody != null){
-                        _listUsers.value = responseBody
+                        currentList.addAll(responseBody)
+                        _listUsers.value = currentList
                     }
                 }
             }
