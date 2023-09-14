@@ -57,6 +57,23 @@ class FollowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupRecyclerView()
+
+        followViewModel.isLoading.observe(viewLifecycleOwner){
+            showLoading(it)
+        }
+
+        if (argLogin != null) {
+            if (argIndex == 0){ followViewModel.findFollowing(argLogin!!) }
+            else followViewModel.findFollowers(argLogin!!)
+        }
+
+        followViewModel.listUsers.observe(viewLifecycleOwner){
+            setListUsers(it)
+        }
+    }
+
+    private fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(requireActivity())
         binding.rvUsers.layoutManager = layoutManager
         val itemDecoration = DividerItemDecoration(requireActivity(), layoutManager.orientation)
@@ -96,18 +113,6 @@ class FollowFragment : Fragment() {
 
         })
 
-        followViewModel.isLoading.observe(viewLifecycleOwner){
-            showLoading(it)
-        }
-
-        if (argLogin != null) {
-            if (argIndex == 0){ followViewModel.findFollowing(argLogin!!) }
-            else followViewModel.findFollowers(argLogin!!)
-        }
-
-        followViewModel.listUsers.observe(viewLifecycleOwner){
-            setListUsers(it)
-        }
     }
 
     private fun setListUsers(items: List<FollowUserResponseItem>?) {

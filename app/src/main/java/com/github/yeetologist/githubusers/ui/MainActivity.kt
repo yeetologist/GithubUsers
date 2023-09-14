@@ -30,21 +30,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val layoutManager =
-            if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                GridLayoutManager(this, 2)
-            } else {
-                LinearLayoutManager(this)
-            }
-        binding.rvUsers.layoutManager = layoutManager
-        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
-        binding.rvUsers.addItemDecoration(itemDecoration)
+        setupRecyclerView()
 
         with(binding) {
             searchView.setupWithSearchBar(searchBar)
             searchView
                 .editText
-                .setOnEditorActionListener { textView, actionId, event ->
+                .setOnEditorActionListener { textView, _, _ ->
                     searchBar.text = searchView.text
                     searchView.hide()
                     mainViewModel.findUser(searchBar.text.toString())
@@ -56,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.listUsers.observe(this){
             setListUsers(it)
         }
+
         mainViewModel.isLoading.observe(this) {
             showLoading(it)
         }
@@ -63,6 +56,26 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.resultCount.observe(this){
             if (it == 0) Snackbar.make(binding.root, "User not found", Snackbar.LENGTH_LONG).show()
         }
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // Save the query to savedInstanceState to handle rotation
+        outState.putString("query", query)
+    }
+
+    private fun setupRecyclerView() {
+        val layoutManager =
+            if (applicationContext.resources.configuration.orientation
+                == Configuration.ORIENTATION_LANDSCAPE) {
+                GridLayoutManager(this, 2)
+            } else {
+                LinearLayoutManager(this)
+            }
+        binding.rvUsers.layoutManager = layoutManager
+        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
+        binding.rvUsers.addItemDecoration(itemDecoration)
 
         binding.rvUsers.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             var currentPage = 2
@@ -89,12 +102,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        // Save the query to savedInstanceState to handle rotation
-        outState.putString("query", query)
     }
 
     private fun setListUsers(items: List<ItemsItem>?) {
