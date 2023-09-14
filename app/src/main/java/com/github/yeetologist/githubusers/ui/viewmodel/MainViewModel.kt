@@ -13,6 +13,8 @@ import retrofit2.Response
 
 class MainViewModel : ViewModel() {
 
+    private val _resultCount = MutableLiveData<Int>()
+    val resultCount: LiveData<Int> = _resultCount
     private val _listUsers = MutableLiveData<List<ItemsItem>>()
     val listUsers: LiveData<List<ItemsItem>> = _listUsers
     private val _isLoading = MutableLiveData<Boolean>()
@@ -22,10 +24,10 @@ class MainViewModel : ViewModel() {
         private const val TAG = "MainViewModel"
     }
 
-    fun findUser(query: String){
+    fun findUser(query: String, page: Int = 1){
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getSearch(query)
-        client.enqueue(object : Callback<SearchResponse>{
+        val client = ApiConfig.getApiService().getSearch(query, page)
+        client.enqueue(object : Callback<SearchResponse> {
             override fun onResponse(
                 call: Call<SearchResponse>,
                 response: Response<SearchResponse>
@@ -35,8 +37,8 @@ class MainViewModel : ViewModel() {
                     val responseBody = response.body()
                     if (responseBody != null) {
                         _listUsers.value = responseBody.items
-                    }
-                    else {
+                        _resultCount.value = responseBody.totalCount
+                    } else {
                         Log.e(TAG, "onFailure: ${response.message()}")
                     }
                 }
@@ -46,8 +48,6 @@ class MainViewModel : ViewModel() {
                 _isLoading.value = false
                 Log.e(TAG, "onFailure: ${t.message}")
             }
-
         })
     }
-
 }

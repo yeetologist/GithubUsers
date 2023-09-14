@@ -13,7 +13,8 @@ interface ApiService {
     @GET("search/users")
     @Headers("Authorization: Bearer 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")
     fun getSearch(
-        @Query("q") username: String
+        @Query("q") username: String,
+        @Query("page") page: Int = 1
     ): Call<SearchResponse>
 
     @GET("users/{username}")
