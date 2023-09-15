@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        android:hint="@string/masukkan_username"
+        android:hint="@string/please_enter_a_username_to_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBarContainer">
@@ -36,7 +36,7 @@
         android:id="@+id/searchView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:hint="@string/masukkan_username"
+        android:hint="@string/please_enter_a_username_to_search"
         app:layout_anchor="@id/searchBar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
