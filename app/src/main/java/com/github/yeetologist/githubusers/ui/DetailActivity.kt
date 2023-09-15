@@ -2,6 +2,7 @@ package com.github.yeetologist.githubusers.ui
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +32,10 @@ class DetailActivity : AppCompatActivity() {
             if (it != null) {
                 setDetailUser(it)
             }
+        }
+
+        detailViewModel.isLoading.observe(this) {
+            showLoading(it)
         }
 
         val sectionsPagerAdapter = SectionsPagerAdapter(this,intent.getStringExtra(EXTRA_LOGIN))
@@ -63,6 +68,10 @@ class DetailActivity : AppCompatActivity() {
         binding.tvFollowing.text = getString(R.string.following_label,userData.following)
         binding.tvName.text = userData.name
         binding.topAppBar.title = userData.login
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {
