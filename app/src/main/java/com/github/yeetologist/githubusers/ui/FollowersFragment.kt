@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.yeetologist.githubusers.data.response.FollowUserResponseItem
-import com.github.yeetologist.githubusers.databinding.FragmentFollowBinding
+import com.github.yeetologist.githubusers.databinding.FragmentFollowersBinding
 import com.github.yeetologist.githubusers.ui.adapter.FollowAdapter
 import com.github.yeetologist.githubusers.ui.viewmodel.FollowViewModel
 
@@ -19,12 +19,12 @@ private const val ARG_LOGIN = "arg_login"
 private const val ARG_INDEX = "arg_index"
 
 
-class FollowFragment : Fragment() {
+class FollowersFragment : Fragment() {
 
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: Int) =
-            FollowFragment().apply {
+            FollowersFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_LOGIN, param1)
                     putInt(ARG_INDEX, param2)
@@ -34,9 +34,9 @@ class FollowFragment : Fragment() {
 
     private var argLogin: String? = null
     private var argIndex: Int? = null
-    private var _binding: FragmentFollowBinding? = null
+    private var _binding: FragmentFollowersBinding? = null
     private val binding get() = _binding!!
-    private val followViewModel by viewModels<FollowViewModel>()
+    private val followersViewModel by viewModels<FollowViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,26 +50,21 @@ class FollowFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFollowBinding.inflate(inflater,container,false)
+        _binding = FragmentFollowersBinding.inflate(inflater,container,false)
         return _binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupRecyclerView()
 
-        followViewModel.isLoading.observe(viewLifecycleOwner){
-            showLoading(it)
-        }
+        followersViewModel.findFollowers(argLogin!!)
 
-        if (argLogin != null) {
-            if (argIndex == 0){ followViewModel.findFollowing(argLogin!!) }
-            else followViewModel.findFollowers(argLogin!!)
-        }
-
-        followViewModel.listUsers.observe(viewLifecycleOwner){
+        followersViewModel.listFollowers.observe(viewLifecycleOwner){
             setListUsers(it)
+        }
+        followersViewModel.isLoading.observe(viewLifecycleOwner){
+            showLoading(it)
         }
     }
 
@@ -79,38 +74,31 @@ class FollowFragment : Fragment() {
         val itemDecoration = DividerItemDecoration(requireActivity(), layoutManager.orientation)
         binding.rvUsers.addItemDecoration(itemDecoration)
 
-//        binding.rvUsers.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-//            var currentPage = 2
-//            var isLoading = false
-//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//                super.onScrolled(recyclerView, dx, dy)
-//                val visibleItemCount = layoutManager.childCount
-//                val totalItemCount = layoutManager.itemCount
-//                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-//
-//                if (!isLoading && visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
-//                    isLoading = true
-//                    if (argIndex == 0) {
-//                        if (DetailActivity.following > 30) {
-//                            argLogin?.let { followViewModel.findFollowing(it, currentPage) }
-//                        }
-//                    }
-//                    else {
-//                        if (DetailActivity.followers > 30) {
-//                            argLogin?.let { followViewModel.findFollowers(it, currentPage) }
-//                        }
-//                    }
-//                    currentPage++
-//                }
-//            }
-//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                super.onScrollStateChanged(recyclerView, newState)
-//
-//                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-//                    isLoading = false
-//                }
-//            }
-//        })
+        binding.rvUsers.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            var nextPage = 2
+            var isLoading = false
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+                if (!isLoading && visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
+                    isLoading = true
+                    if (DetailActivity.followers > 30) {
+                        argLogin?.let { followersViewModel.findFollowers(it, nextPage) }
+                    }
+                    nextPage++
+                }
+            }
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    isLoading = false
+                }
+            }
+        })
     }
 
     private fun setListUsers(items: List<FollowUserResponseItem>?) {
@@ -123,7 +111,6 @@ class FollowFragment : Fragment() {
                 intent.putExtra(DetailActivity.EXTRA_LOGIN,searchResult.login)
                 startActivity(intent)
             }
-
         })
     }
 
@@ -135,5 +122,4 @@ class FollowFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

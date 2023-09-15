@@ -12,8 +12,10 @@ import retrofit2.Response
 
 class FollowViewModel : ViewModel() {
 
-    private val _listUsers = MutableLiveData<List<FollowUserResponseItem>?>()
-    val listUsers: LiveData<List<FollowUserResponseItem>?> = _listUsers
+    private val _listFollowers = MutableLiveData<List<FollowUserResponseItem>?>()
+    val listFollowers: LiveData<List<FollowUserResponseItem>?> = _listFollowers
+    private val _listFollowing = MutableLiveData<List<FollowUserResponseItem>?>()
+    val listFollowing: LiveData<List<FollowUserResponseItem>?> = _listFollowing
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -32,10 +34,10 @@ class FollowViewModel : ViewModel() {
                 _isLoading.value = false
                 val responseBody = response.body()
                 if (response.isSuccessful){
-                    val currentList = _listUsers.value?.toMutableList() ?: mutableListOf()
+                    val currentList = _listFollowing.value?.toMutableList() ?: mutableListOf()
                     if (responseBody != null){
                         currentList.addAll(responseBody)
-                        _listUsers.value = currentList
+                        _listFollowing.value = currentList
                     }
                 }
             }
@@ -58,10 +60,10 @@ class FollowViewModel : ViewModel() {
                 _isLoading.value = false
                 val responseBody = response.body()
                 if (response.isSuccessful){
-                    val currentList = _listUsers.value?.toMutableList() ?: mutableListOf()
+                    val currentList = _listFollowers.value?.toMutableList() ?: mutableListOf()
                     if (responseBody != null){
                         currentList.addAll(responseBody)
-                        _listUsers.value = currentList
+                        _listFollowers.value = currentList
                     }
                 }
             }
