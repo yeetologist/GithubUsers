@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.yeetologist.githubusers.data.response.FollowUserResponseItem
-import com.github.yeetologist.githubusers.databinding.FragmentFollowingBinding
+import com.github.yeetologist.githubusers.databinding.FragmentFollowBinding
 import com.github.yeetologist.githubusers.ui.adapter.FollowAdapter
 import com.github.yeetologist.githubusers.ui.viewmodel.FollowViewModel
 
@@ -34,7 +34,7 @@ class FollowFragment : Fragment() {
 
     private var argLogin: String? = null
     private var argIndex: Int? = null
-    private var _binding: FragmentFollowingBinding? = null
+    private var _binding: FragmentFollowBinding? = null
     private val binding get() = _binding!!
     private val followViewModel by viewModels<FollowViewModel>()
 
@@ -50,7 +50,7 @@ class FollowFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFollowingBinding.inflate(inflater,container,false)
+        _binding = FragmentFollowBinding.inflate(inflater,container,false)
         return _binding!!.root
     }
 
@@ -79,40 +79,38 @@ class FollowFragment : Fragment() {
         val itemDecoration = DividerItemDecoration(requireActivity(), layoutManager.orientation)
         binding.rvUsers.addItemDecoration(itemDecoration)
 
-        binding.rvUsers.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-            var currentPage = 2
-            var isLoading = false
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val visibleItemCount = layoutManager.childCount
-                val totalItemCount = layoutManager.itemCount
-                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-
-                if (!isLoading && visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
-                    isLoading = true
-                    if (argIndex == 0) {
-                        if (DetailActivity.following > 30) {
-                            argLogin?.let { followViewModel.findFollowing(it, currentPage) }
-                        }
-                    }
-                    else {
-                        if (DetailActivity.followers > 30) {
-                            argLogin?.let { followViewModel.findFollowers(it, currentPage) }
-                        }
-                    }
-                    currentPage++
-                }
-            }
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    isLoading = false
-                }
-            }
-
-        })
-
+//        binding.rvUsers.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+//            var currentPage = 2
+//            var isLoading = false
+//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                super.onScrolled(recyclerView, dx, dy)
+//                val visibleItemCount = layoutManager.childCount
+//                val totalItemCount = layoutManager.itemCount
+//                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+//
+//                if (!isLoading && visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
+//                    isLoading = true
+//                    if (argIndex == 0) {
+//                        if (DetailActivity.following > 30) {
+//                            argLogin?.let { followViewModel.findFollowing(it, currentPage) }
+//                        }
+//                    }
+//                    else {
+//                        if (DetailActivity.followers > 30) {
+//                            argLogin?.let { followViewModel.findFollowers(it, currentPage) }
+//                        }
+//                    }
+//                    currentPage++
+//                }
+//            }
+//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//                super.onScrollStateChanged(recyclerView, newState)
+//
+//                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                    isLoading = false
+//                }
+//            }
+//        })
     }
 
     private fun setListUsers(items: List<FollowUserResponseItem>?) {
