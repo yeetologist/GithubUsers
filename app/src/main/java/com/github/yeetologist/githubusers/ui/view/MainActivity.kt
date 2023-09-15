@@ -1,4 +1,4 @@
-package com.github.yeetologist.githubusers.ui
+package com.github.yeetologist.githubusers.ui.view
 
 import android.content.Intent
 import android.content.res.Configuration
@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() {
         binding.rvUsers.adapter = adapter
         adapter.setOnItemClickListener(object : SearchAdapter.OnItemClickListener {
             override fun onItemClick(searchResult: ItemsItem) {
-                val intent = Intent(this@MainActivity,DetailActivity::class.java)
+                val intent = Intent(this@MainActivity, DetailActivity::class.java)
                 intent.putExtra(DetailActivity.EXTRA_LOGIN, searchResult.login)
                 startActivity(intent)
             }

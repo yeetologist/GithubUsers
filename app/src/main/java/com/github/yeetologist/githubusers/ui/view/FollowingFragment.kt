@@ -1,4 +1,4 @@
-package com.github.yeetologist.githubusers.ui
+package com.github.yeetologist.githubusers.ui.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.yeetologist.githubusers.data.response.FollowUserResponseItem
-import com.github.yeetologist.githubusers.databinding.FragmentFollowersBinding
+import com.github.yeetologist.githubusers.databinding.FragmentFollowingBinding
 import com.github.yeetologist.githubusers.ui.adapter.FollowAdapter
 import com.github.yeetologist.githubusers.ui.viewmodel.FollowViewModel
 
@@ -19,12 +19,12 @@ private const val ARG_LOGIN = "arg_login"
 private const val ARG_INDEX = "arg_index"
 
 
-class FollowersFragment : Fragment() {
+class FollowingFragment : Fragment() {
 
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: Int) =
-            FollowersFragment().apply {
+            FollowingFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_LOGIN, param1)
                     putInt(ARG_INDEX, param2)
@@ -34,9 +34,9 @@ class FollowersFragment : Fragment() {
 
     private var argLogin: String? = null
     private var argIndex: Int? = null
-    private var _binding: FragmentFollowersBinding? = null
+    private var _binding: FragmentFollowingBinding? = null
     private val binding get() = _binding!!
-    private val followersViewModel by viewModels<FollowViewModel>()
+    private val followingViewModel by viewModels<FollowViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,20 +50,21 @@ class FollowersFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFollowersBinding.inflate(inflater,container,false)
+        _binding = FragmentFollowingBinding.inflate(inflater,container,false)
         return _binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setupRecyclerView()
 
-        followersViewModel.findFollowers(argLogin!!)
+        followingViewModel.findFollowing(argLogin!!)
 
-        followersViewModel.listFollowers.observe(viewLifecycleOwner){
+        followingViewModel.listFollowing.observe(viewLifecycleOwner){
             setListUsers(it)
         }
-        followersViewModel.isLoading.observe(viewLifecycleOwner){
+        followingViewModel.isLoading.observe(viewLifecycleOwner){
             showLoading(it)
         }
     }
@@ -85,8 +86,8 @@ class FollowersFragment : Fragment() {
 
                 if (!isLoading && visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
                     isLoading = true
-                    if (DetailActivity.followers > 30) {
-                        argLogin?.let { followersViewModel.findFollowers(it, nextPage) }
+                    if (DetailActivity.following > 30) {
+                        argLogin?.let { followingViewModel.findFollowing(it, nextPage) }
                     }
                     nextPage++
                 }

@@ -1,4 +1,4 @@
-package com.github.yeetologist.githubusers.ui
+package com.github.yeetologist.githubusers.ui.view
 
 import android.os.Bundle
 import android.view.MenuItem
