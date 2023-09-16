@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.yeetologist.githubusers.data.response.DetailUserResponse
 import com.github.yeetologist.githubusers.data.retrofit.ApiConfig
+import com.github.yeetologist.githubusers.util.Event
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,8 +17,8 @@ class DetailViewModel : ViewModel() {
         private const val TAG = "DetailViewModel"
     }
 
-    private val _detail = MutableLiveData<DetailUserResponse?>()
-    val detail: LiveData<DetailUserResponse?> = _detail
+    private val _detail = MutableLiveData<Event<DetailUserResponse>>()
+    val detail: LiveData<Event<DetailUserResponse>> = _detail
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -32,7 +33,7 @@ class DetailViewModel : ViewModel() {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     val responseBody = response.body()
-                    if (responseBody != null) _detail.value = responseBody
+                    if (responseBody != null) _detail.value = Event(responseBody)
                 }
                 else {
                     Log.e("MainActivity", "onFailure: ${response.message()}")

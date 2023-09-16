@@ -17,6 +17,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     private val detailViewModel by viewModels<DetailViewModel>()
+    private var isFindDetailUserCalled = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -26,12 +27,15 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        intent.getStringExtra(EXTRA_LOGIN)?.let { detailViewModel.findDetailUser(it) }
+        if (savedInstanceState == null && !isFindDetailUserCalled) {
+            intent.getStringExtra(EXTRA_LOGIN)?.let { login ->
+                detailViewModel.findDetailUser(login)
+                isFindDetailUserCalled = true
+            }
+        }
 
         detailViewModel.detail.observe(this){
-            if (it != null) {
-                setDetailUser(it)
-            }
+            setDetailUser(it.peekContent())
         }
 
         detailViewModel.isLoading.observe(this) {
@@ -39,7 +43,6 @@ class DetailActivity : AppCompatActivity() {
         }
 
         val sectionsPagerAdapter = SectionsPagerAdapter(this,intent.getStringExtra(EXTRA_LOGIN))
-
         val viewPager = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter
         val tabs = binding.tabs

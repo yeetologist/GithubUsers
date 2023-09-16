@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel by viewModels<MainViewModel>()
     private lateinit var query: String
+    private var userCount: Int? = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,36 +33,25 @@ class MainActivity : AppCompatActivity() {
 
         setupRecyclerView()
 
-        with(binding) {
-            searchView.setupWithSearchBar(searchBar)
-            searchView
-                .editText
-                .setOnEditorActionListener { textView, _, _ ->
-                    searchBar.text = searchView.text
-                    searchView.hide()
-                    mainViewModel.findUser(searchBar.text.toString())
-                    query = textView.text.toString()
-                    false
-                }
-        }
-
         mainViewModel.listUsers.observe(this){
-            setListUsers(it)
+            setListUsers(it.peekContent())
         }
 
         mainViewModel.isLoading.observe(this) {
             showLoading(it)
         }
 
-        mainViewModel.resultCount.observe(this){
-            if (it == 0) Snackbar.make(binding.root, "User not found", Snackbar.LENGTH_LONG).show()
+        mainViewModel.resultCount.observe(this) {
+            it.getContentIfNotHandled().let {sum ->
+                if (sum == 0) Snackbar.make(binding.root, "User not found", Snackbar.LENGTH_LONG)
+                    .show()
+            }
+            userCount = it.peekContent()
         }
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        // Save the query to savedInstanceState to handle rotation
         outState.putString("query", query)
     }
 
@@ -77,8 +67,21 @@ class MainActivity : AppCompatActivity() {
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvUsers.addItemDecoration(itemDecoration)
 
+        with(binding) {
+            searchView.setupWithSearchBar(searchBar)
+            searchView
+                .editText
+                .setOnEditorActionListener { textView, _, _ ->
+                    searchBar.text = searchView.text
+                    searchView.hide()
+                    mainViewModel.findUser(searchBar.text.toString())
+                    query = textView.text.toString()
+                    false
+                }
+        }
+
         binding.rvUsers.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-            var currentPage = 2
+            var nextPage = 2
             var isLoading = false
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -88,10 +91,10 @@ class MainActivity : AppCompatActivity() {
 
                 if (!isLoading && visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
                     isLoading = true
-                    if (mainViewModel.resultCount.value!! > 30) {
-                        mainViewModel.findUser(query, currentPage)
+                    if (userCount?.let { it > 30 } == true) {
+                        mainViewModel.findUser(query, nextPage)
                     }
-                    currentPage++
+                    nextPage++
                 }
             }
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
