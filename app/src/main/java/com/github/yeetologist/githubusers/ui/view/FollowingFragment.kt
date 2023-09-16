@@ -59,10 +59,13 @@ class FollowingFragment : Fragment() {
 
         setupRecyclerView()
 
-        followingViewModel.findFollowing(argLogin!!)
+        if (!followingViewModel.isFunctionExecuted) {
+            followingViewModel.findFollowing(argLogin!!)
+            followingViewModel.isFunctionExecuted = true
+        }
 
         followingViewModel.listFollowing.observe(viewLifecycleOwner){
-            setListUsers(it)
+            setListUsers(it.peekContent())
         }
         followingViewModel.isLoading.observe(viewLifecycleOwner){
             showLoading(it)

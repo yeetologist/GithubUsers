@@ -56,12 +56,16 @@ class FollowersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setupRecyclerView()
 
-        followersViewModel.findFollowers(argLogin!!)
+        if (!followersViewModel.isFunctionExecuted) {
+            followersViewModel.findFollowers(argLogin!!)
+            followersViewModel.isFunctionExecuted = true
+        }
 
         followersViewModel.listFollowers.observe(viewLifecycleOwner){
-            setListUsers(it)
+            setListUsers(it.peekContent())
         }
         followersViewModel.isLoading.observe(viewLifecycleOwner){
             showLoading(it)

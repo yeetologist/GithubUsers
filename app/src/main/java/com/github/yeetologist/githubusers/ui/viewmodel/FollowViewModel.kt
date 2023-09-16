@@ -6,18 +6,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.yeetologist.githubusers.data.response.FollowUserResponseItem
 import com.github.yeetologist.githubusers.data.retrofit.ApiConfig
+import com.github.yeetologist.githubusers.util.Event
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class FollowViewModel : ViewModel() {
 
-    private val _listFollowers = MutableLiveData<List<FollowUserResponseItem>?>()
-    val listFollowers: LiveData<List<FollowUserResponseItem>?> = _listFollowers
-    private val _listFollowing = MutableLiveData<List<FollowUserResponseItem>?>()
-    val listFollowing: LiveData<List<FollowUserResponseItem>?> = _listFollowing
+    private val _listFollowers = MutableLiveData<Event<List<FollowUserResponseItem>>>()
+    val listFollowers: LiveData<Event<List<FollowUserResponseItem>>> = _listFollowers
+    private val _listFollowing = MutableLiveData<Event<List<FollowUserResponseItem>>>()
+    val listFollowing: LiveData<Event<List<FollowUserResponseItem>>> = _listFollowing
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
+    var isFunctionExecuted = false
 
     companion object{
         private const val TAG = "FollowingViewModel"
@@ -34,10 +36,10 @@ class FollowViewModel : ViewModel() {
                 _isLoading.value = false
                 val responseBody = response.body()
                 if (response.isSuccessful){
-                    val currentList = _listFollowing.value?.toMutableList() ?: mutableListOf()
+                    val currentList = _listFollowing.value?.peekContent()?.toMutableList() ?: mutableListOf()
                     if (responseBody != null){
                         currentList.addAll(responseBody)
-                        _listFollowing.value = currentList
+                        _listFollowing.value = Event(currentList)
                     }
                 }
             }
@@ -60,10 +62,10 @@ class FollowViewModel : ViewModel() {
                 _isLoading.value = false
                 val responseBody = response.body()
                 if (response.isSuccessful){
-                    val currentList = _listFollowers.value?.toMutableList() ?: mutableListOf()
+                    val currentList = _listFollowers.value?.peekContent()?.toMutableList() ?: mutableListOf()
                     if (responseBody != null){
                         currentList.addAll(responseBody)
-                        _listFollowers.value = currentList
+                        _listFollowers.value = Event(currentList)
                     }
                 }
             }
