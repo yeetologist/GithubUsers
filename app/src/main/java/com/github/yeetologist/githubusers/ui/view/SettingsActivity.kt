@@ -2,15 +2,19 @@ package com.github.yeetologist.githubusers.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.github.yeetologist.githubusers.R
-import com.github.yeetologist.githubusers.ui.SettingPreferences
-import com.github.yeetologist.githubusers.ui.dataStore
-import com.github.yeetologist.githubusers.ui.viewmodel.ViewModelFactory
+import com.github.yeetologist.githubusers.data.SettingPreferences
+import com.github.yeetologist.githubusers.data.dataStore
+import com.github.yeetologist.githubusers.databinding.ActivitySettingsBinding
+import com.github.yeetologist.githubusers.ui.viewmodel.SettingViewModel
+import com.github.yeetologist.githubusers.ui.viewmodel.SettingViewModelFactory
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySettingsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -18,7 +22,7 @@ class SettingsActivity : AppCompatActivity() {
 
         val preferences = SettingPreferences.getInstance(application.dataStore)
 
-        val settingViewModel = ViewModelProvider(this, ViewModelFactory(preferences))[SettingViewModel::class.java]
+        val settingViewModel = ViewModelProvider(this, SettingViewModelFactory(preferences))[SettingViewModel::class.java]
 
         settingViewModel.getThemeSettings().observe(this) {
             if (it) {
@@ -32,6 +36,21 @@ class SettingsActivity : AppCompatActivity() {
         }
         switchTheme.setOnCheckedChangeListener { _, isChecked: Boolean ->
             settingViewModel.saveThemeSetting(isChecked)
+        }
+
+        setSupportActionBar(binding.topAppBar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                // Handle the back button click event here
+                finish() // You can use this to navigate back
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

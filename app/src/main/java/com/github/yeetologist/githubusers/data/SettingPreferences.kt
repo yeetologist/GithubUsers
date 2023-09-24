@@ -1,4 +1,4 @@
-package com.github.yeetologist.githubusers.ui
+package com.github.yeetologist.githubusers.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore

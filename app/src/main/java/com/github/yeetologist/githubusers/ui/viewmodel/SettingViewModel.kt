@@ -1,10 +1,10 @@
-package com.github.yeetologist.githubusers.ui.view
+package com.github.yeetologist.githubusers.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.github.yeetologist.githubusers.ui.SettingPreferences
+import com.github.yeetologist.githubusers.data.SettingPreferences
 import kotlinx.coroutines.launch
 
 class SettingViewModel(private val pref: SettingPreferences) : ViewModel() {

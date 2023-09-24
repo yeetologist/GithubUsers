@@ -10,6 +10,8 @@
     <string name="tab_text_2">Followers</string>
     <string name="key_dark">Dark Mode</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="favorite_users">Favorite Users</string>
+    <string name="settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="followers_label">Followers\n%1$d</string>
     <string name="following_label">Following\n%1$d</string>
