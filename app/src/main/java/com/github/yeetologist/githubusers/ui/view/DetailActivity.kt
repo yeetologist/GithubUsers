@@ -63,14 +63,16 @@ class DetailActivity : AppCompatActivity() {
     private fun setDetailUser(userData: DetailUserResponse) {
         following = userData.following
         followers = userData.followers
-        binding.tvLogin.text = userData.login
-        Glide.with(binding.root)
-            .load(userData.avatarUrl)
-            .into(binding.ivProfile)
-        binding.tvFollowers.text = getString(R.string.followers_label,userData.followers)
-        binding.tvFollowing.text = getString(R.string.following_label,userData.following)
-        binding.tvName.text = userData.name
-        binding.topAppBar.title = userData.login
+        binding.apply {
+            tvLogin.text = userData.login
+            Glide.with(root)
+                .load(userData.avatarUrl)
+                .into(ivProfile)
+            tvFollowers.text = getString(R.string.followers_label,userData.followers)
+            tvFollowing.text = getString(R.string.following_label,userData.following)
+            tvName.text = userData.name
+            topAppBar.title = userData.login
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {

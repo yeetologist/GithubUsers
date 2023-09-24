@@ -35,7 +35,7 @@ class FollowersFragment : Fragment() {
     private var argLogin: String? = null
     private var argIndex: Int? = null
     private var _binding: FragmentFollowersBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private val followersViewModel by viewModels<FollowViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,11 +74,11 @@ class FollowersFragment : Fragment() {
 
     private fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(requireActivity())
-        binding.rvUsers.layoutManager = layoutManager
+        binding?.rvUsers?.layoutManager = layoutManager
         val itemDecoration = DividerItemDecoration(requireActivity(), layoutManager.orientation)
-        binding.rvUsers.addItemDecoration(itemDecoration)
+        binding?.rvUsers?.addItemDecoration(itemDecoration)
 
-        binding.rvUsers.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+        binding?.rvUsers?.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             var nextPage = 2
             var isLoading = false
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -108,7 +108,7 @@ class FollowersFragment : Fragment() {
     private fun setListUsers(items: List<FollowUserResponseItem>?) {
         val adapter = FollowAdapter()
         adapter.submitList(items)
-        binding.rvUsers.adapter = adapter
+        binding?.rvUsers?.adapter = adapter
         adapter.setOnItemClickListener(object : FollowAdapter.OnItemClickListener{
             override fun onItemClick(searchResult: FollowUserResponseItem) {
                 val intent = Intent(activity, DetailActivity::class.java)
@@ -119,7 +119,7 @@ class FollowersFragment : Fragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {

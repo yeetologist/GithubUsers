@@ -21,21 +21,10 @@ private const val ARG_INDEX = "arg_index"
 
 class FollowingFragment : Fragment() {
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: Int) =
-            FollowingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_LOGIN, param1)
-                    putInt(ARG_INDEX, param2)
-                }
-            }
-    }
-
     private var argLogin: String? = null
     private var argIndex: Int? = null
     private var _binding: FragmentFollowingBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private val followingViewModel by viewModels<FollowViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,11 +63,11 @@ class FollowingFragment : Fragment() {
 
     private fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(requireActivity())
-        binding.rvUsers.layoutManager = layoutManager
+        binding?.rvUsers?.layoutManager = layoutManager
         val itemDecoration = DividerItemDecoration(requireActivity(), layoutManager.orientation)
-        binding.rvUsers.addItemDecoration(itemDecoration)
+        binding?.rvUsers?.addItemDecoration(itemDecoration)
 
-        binding.rvUsers.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+        binding?.rvUsers?.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             var nextPage = 2
             var isLoading = false
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -108,7 +97,7 @@ class FollowingFragment : Fragment() {
     private fun setListUsers(items: List<FollowUserResponseItem>?) {
         val adapter = FollowAdapter()
         adapter.submitList(items)
-        binding.rvUsers.adapter = adapter
+        binding?.rvUsers?.adapter = adapter
         adapter.setOnItemClickListener(object : FollowAdapter.OnItemClickListener{
             override fun onItemClick(searchResult: FollowUserResponseItem) {
                 val intent = Intent(activity, DetailActivity::class.java)
@@ -119,11 +108,23 @@ class FollowingFragment : Fragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(param1: String, param2: Int) =
+            FollowingFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_LOGIN, param1)
+                    putInt(ARG_INDEX, param2)
+                }
+            }
+    }
+
 }
