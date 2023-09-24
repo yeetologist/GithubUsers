@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.yeetologist.githubusers.R
 import com.github.yeetologist.githubusers.data.response.ItemsItem
 import com.github.yeetologist.githubusers.databinding.ActivityMainBinding
 import com.github.yeetologist.githubusers.ui.adapter.SearchAdapter
@@ -47,6 +48,16 @@ class MainActivity : AppCompatActivity() {
                     .show()
             }
             userCount = it.peekContent()
+        }
+
+        binding.topAppBar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.settings_menu -> {
+                    startActivity(Intent(this@MainActivity,SettingsActivity::class.java))
+                    true
+                }
+                else -> super.onOptionsItemSelected(it)
+            }
         }
     }
 
