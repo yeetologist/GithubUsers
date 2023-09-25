@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.yeetologist.githubusers.R
-import com.github.yeetologist.githubusers.data.response.ItemsItem
+import com.github.yeetologist.githubusers.data.remote.response.ItemsItem
 import com.github.yeetologist.githubusers.databinding.ActivityMainBinding
 import com.github.yeetologist.githubusers.ui.adapter.SearchAdapter
 import com.github.yeetologist.githubusers.ui.viewmodel.MainViewModel

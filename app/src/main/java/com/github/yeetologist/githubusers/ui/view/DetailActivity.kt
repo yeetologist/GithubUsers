@@ -8,7 +8,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.github.yeetologist.githubusers.R
-import com.github.yeetologist.githubusers.data.response.DetailUserResponse
+import com.github.yeetologist.githubusers.data.remote.response.DetailUserResponse
 import com.github.yeetologist.githubusers.databinding.ActivityDetailBinding
 import com.github.yeetologist.githubusers.ui.adapter.SectionsPagerAdapter
 import com.github.yeetologist.githubusers.ui.viewmodel.DetailViewModel

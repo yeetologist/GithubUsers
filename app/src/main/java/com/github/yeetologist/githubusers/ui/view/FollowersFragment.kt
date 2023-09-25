@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.github.yeetologist.githubusers.data.response.FollowUserResponseItem
+import com.github.yeetologist.githubusers.data.remote.response.FollowUserResponseItem
 import com.github.yeetologist.githubusers.databinding.FragmentFollowersBinding
 import com.github.yeetologist.githubusers.ui.adapter.FollowAdapter
 import com.github.yeetologist.githubusers.ui.viewmodel.FollowViewModel

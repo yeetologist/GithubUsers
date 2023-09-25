@@ -1,9 +1,9 @@
 package com.github.yeetologist.githubusers.data.remote.retrofit
 
 import com.github.yeetologist.githubusers.BuildConfig
-import com.github.yeetologist.githubusers.data.response.DetailUserResponse
-import com.github.yeetologist.githubusers.data.response.FollowUserResponseItem
-import com.github.yeetologist.githubusers.data.response.SearchResponse
+import com.github.yeetologist.githubusers.data.remote.response.DetailUserResponse
+import com.github.yeetologist.githubusers.data.remote.response.FollowUserResponseItem
+import com.github.yeetologist.githubusers.data.remote.response.SearchResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers

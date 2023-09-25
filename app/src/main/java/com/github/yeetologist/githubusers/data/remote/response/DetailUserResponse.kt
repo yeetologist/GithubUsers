@@ -1,4 +1,4 @@
-package com.github.yeetologist.githubusers.data.response
+package com.github.yeetologist.githubusers.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.github.yeetologist.githubusers.data.response.FollowUserResponseItem
+import com.github.yeetologist.githubusers.data.remote.response.FollowUserResponseItem
 import com.github.yeetologist.githubusers.databinding.ItemSearchBinding
 
 class FollowAdapter : ListAdapter<FollowUserResponseItem, FollowAdapter.MyViewHolder>(DIFF_CALLBACK) {
