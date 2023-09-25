@@ -17,7 +17,8 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val switchTheme = findViewById<SwitchMaterial>(R.id.switch_theme)
 
         val preferences = SettingPreferences.getInstance(application.dataStore)
