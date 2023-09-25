@@ -1,4 +1,4 @@
-package com.github.yeetologist.githubusers.data.retrofit
+package com.github.yeetologist.githubusers.data.remote.retrofit
 
 import com.github.yeetologist.githubusers.BuildConfig
 import com.github.yeetologist.githubusers.data.response.DetailUserResponse

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.yeetologist.githubusers.data.response.ItemsItem
 import com.github.yeetologist.githubusers.data.response.SearchResponse
-import com.github.yeetologist.githubusers.data.retrofit.ApiConfig
+import com.github.yeetologist.githubusers.data.remote.retrofit.ApiConfig
 import com.github.yeetologist.githubusers.util.Event
 import retrofit2.Call
 import retrofit2.Callback

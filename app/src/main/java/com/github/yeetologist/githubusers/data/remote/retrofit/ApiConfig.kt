@@ -1,4 +1,4 @@
-package com.github.yeetologist.githubusers.data.retrofit
+package com.github.yeetologist.githubusers.data.remote.retrofit
 
 import de.hdodenhof.circleimageview.BuildConfig
 import okhttp3.OkHttpClient
