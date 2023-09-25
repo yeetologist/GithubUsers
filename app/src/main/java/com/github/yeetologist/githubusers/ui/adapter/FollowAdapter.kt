@@ -31,16 +31,6 @@ class FollowAdapter : ListAdapter<FollowUserResponseItem, FollowAdapter.MyViewHo
         }
     }
 
-    companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FollowUserResponseItem>() {
-            override fun areItemsTheSame(oldItem: FollowUserResponseItem, newItem: FollowUserResponseItem): Boolean {
-                return oldItem == newItem
-            }
-            override fun areContentsTheSame(oldItem: FollowUserResponseItem, newItem: FollowUserResponseItem): Boolean {
-                return oldItem == newItem
-            }
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = ItemSearchBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -55,4 +45,14 @@ class FollowAdapter : ListAdapter<FollowUserResponseItem, FollowAdapter.MyViewHo
         }
     }
 
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FollowUserResponseItem>() {
+            override fun areItemsTheSame(oldItem: FollowUserResponseItem, newItem: FollowUserResponseItem): Boolean {
+                return oldItem == newItem
+            }
+            override fun areContentsTheSame(oldItem: FollowUserResponseItem, newItem: FollowUserResponseItem): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
 }

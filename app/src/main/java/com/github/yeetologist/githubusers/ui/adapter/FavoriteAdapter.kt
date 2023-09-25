@@ -32,6 +32,19 @@ class FavoriteAdapter : ListAdapter<FavoriteEntity, FavoriteAdapter.MyViewHolder
         }
     }
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        val binding = ItemSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MyViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        val result = getItem(position)
+        holder.bind(result)
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.onItemClick(result)
+        }
+    }
+
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FavoriteEntity>() {
             override fun areItemsTheSame(
@@ -47,19 +60,6 @@ class FavoriteAdapter : ListAdapter<FavoriteEntity, FavoriteAdapter.MyViewHolder
             ): Boolean {
                 return oldItem == newItem
             }
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding = ItemSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MyViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val result = getItem(position)
-        holder.bind(result)
-        holder.itemView.setOnClickListener {
-            onItemClickListener?.onItemClick(result)
         }
     }
 }

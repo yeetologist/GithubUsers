@@ -23,10 +23,6 @@ class MainViewModel(private val pref: SettingPreferences) : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    companion object{
-        private const val TAG = "MainViewModel"
-    }
-
     fun findUser(query: String, page: Int = 1){
         _isLoading.value = true
         val client = ApiConfig.getApiService().getSearch(query, page)
@@ -55,5 +51,9 @@ class MainViewModel(private val pref: SettingPreferences) : ViewModel() {
     }
     fun getThemeSettings(): LiveData<Boolean> {
         return pref.getThemeSetting().asLiveData()
+    }
+
+    companion object{
+        private const val TAG = "MainViewModel"
     }
 }

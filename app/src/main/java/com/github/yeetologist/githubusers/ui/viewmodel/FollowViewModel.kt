@@ -21,10 +21,6 @@ class FollowViewModel : ViewModel() {
     val isLoading: LiveData<Boolean> = _isLoading
     var isFunctionExecuted = false
 
-    companion object{
-        private const val TAG = "FollowingViewModel"
-    }
-
     fun findFollowing(login: String, page: Int = 1){
         _isLoading.value = true
         val client = ApiConfig.getApiService().getFollowing(login, page)
@@ -75,5 +71,9 @@ class FollowViewModel : ViewModel() {
                 Log.e(TAG, "onFailure: ${t.message}")
             }
         })
+    }
+
+    companion object{
+        private const val TAG = "FollowingViewModel"
     }
 }

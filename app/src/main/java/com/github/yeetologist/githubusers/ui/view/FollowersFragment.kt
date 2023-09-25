@@ -21,17 +21,6 @@ private const val ARG_INDEX = "arg_index"
 
 class FollowersFragment : Fragment() {
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: Int) =
-            FollowersFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_LOGIN, param1)
-                    putInt(ARG_INDEX, param2)
-                }
-            }
-    }
-
     private var argLogin: String? = null
     private var argIndex: Int? = null
     private var _binding: FragmentFollowersBinding? = null
@@ -125,5 +114,16 @@ class FollowersFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(param1: String, param2: Int) =
+            FollowersFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_LOGIN, param1)
+                    putInt(ARG_INDEX, param2)
+                }
+            }
     }
 }

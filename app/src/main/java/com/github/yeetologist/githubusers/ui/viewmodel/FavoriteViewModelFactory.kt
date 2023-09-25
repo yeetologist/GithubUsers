@@ -6,6 +6,14 @@ import androidx.lifecycle.ViewModelProvider
 
 class FavoriteViewModelFactory private constructor(private val application: Application) :
     ViewModelProvider.NewInstanceFactory()  {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(FavoriteViewModel::class.java)) {
+            return FavoriteViewModel(application) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class : ${modelClass.name} ")
+    }
     companion object {
         @Volatile
         private var INSTANCE: FavoriteViewModelFactory? = null
@@ -19,13 +27,5 @@ class FavoriteViewModelFactory private constructor(private val application: Appl
             }
             return INSTANCE as FavoriteViewModelFactory
         }
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(FavoriteViewModel::class.java)) {
-            return FavoriteViewModel(application) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class : ${modelClass.name} ")
     }
 }
