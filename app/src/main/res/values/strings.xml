@@ -8,6 +8,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="tab_text_1">Following</string>
     <string name="tab_text_2">Followers</string>
+    <string name="favorite">Favorite</string>
     <string name="key_dark">Dark Mode</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="favorite_users">Favorite Users</string>

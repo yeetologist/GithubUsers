@@ -8,39 +8,51 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.github.yeetologist.githubusers.R
+import com.github.yeetologist.githubusers.data.local.entity.FavoriteEntity
 import com.github.yeetologist.githubusers.data.remote.response.DetailUserResponse
 import com.github.yeetologist.githubusers.databinding.ActivityDetailBinding
 import com.github.yeetologist.githubusers.ui.adapter.SectionsPagerAdapter
 import com.github.yeetologist.githubusers.ui.viewmodel.DetailViewModel
+import com.github.yeetologist.githubusers.ui.viewmodel.DetailViewModelFactory
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
-    private val detailViewModel by viewModels<DetailViewModel>()
     private var isFindDetailUserCalled = false
+    private var isFavorite = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val login: String? = intent.getStringExtra(EXTRA_LOGIN)
+        val detailViewModel by viewModels<DetailViewModel> {
+            DetailViewModelFactory(application)
+        }
         setSupportActionBar(binding.topAppBar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         if (savedInstanceState == null && !isFindDetailUserCalled) {
-            intent.getStringExtra(EXTRA_LOGIN)?.let { login ->
+            if (login != null) {
                 detailViewModel.findDetailUser(login)
-                isFindDetailUserCalled = true
             }
+            isFindDetailUserCalled = true
         }
 
         detailViewModel.detail.observe(this){
             setDetailUser(it.peekContent())
+            detailViewModel.getFavoriteById(it.peekContent().id).observe(this@DetailActivity){ entity ->
+                isFavorite = entity.isNotEmpty()
+            }
         }
 
         detailViewModel.isLoading.observe(this) {
             showLoading(it)
         }
+
+
 
         val sectionsPagerAdapter = SectionsPagerAdapter(this,intent.getStringExtra(EXTRA_LOGIN))
         val viewPager = binding.viewPager
@@ -50,6 +62,31 @@ class DetailActivity : AppCompatActivity() {
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
         supportActionBar?.elevation = 0f
+
+        binding.fabFavorite.setOnClickListener {
+            val user = detailViewModel.detail.value?.peekContent()?.id?.let { it1 ->
+                detailViewModel.detail.value?.peekContent()?.login?.let { it2 ->
+                    detailViewModel.detail.value?.peekContent()?.htmlUrl?.let { it3 ->
+                        detailViewModel.detail.value?.peekContent()?.avatarUrl?.let { it4 ->
+                            FavoriteEntity(
+                                it1,
+                                it2,
+                                it3,
+                                it4
+                            )
+                        }
+                    }
+                }
+            }
+            if (user != null) {
+                if (!isFavorite) {
+                    detailViewModel.insert(user)
+                }
+                else {
+                    detailViewModel.delete(user)
+                }
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

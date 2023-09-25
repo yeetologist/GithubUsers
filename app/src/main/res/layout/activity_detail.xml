@@ -113,4 +113,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        app:tint="?attr/colorOnPrimary"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/favorite"
+        android:src="@drawable/ic_favorite" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
