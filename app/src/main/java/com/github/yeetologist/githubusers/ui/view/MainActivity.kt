@@ -56,6 +56,10 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent(this@MainActivity,SettingsActivity::class.java))
                     true
                 }
+                R.id.favorite_menu -> {
+                    startActivity(Intent(this@MainActivity,FavoriteActivity::class.java))
+                    true
+                }
                 else -> super.onOptionsItemSelected(it)
             }
         }
