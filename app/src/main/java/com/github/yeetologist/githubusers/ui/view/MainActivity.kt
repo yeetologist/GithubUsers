@@ -1,23 +1,32 @@
 package com.github.yeetologist.githubusers.ui.view
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.yeetologist.githubusers.R
+import com.github.yeetologist.githubusers.data.SettingPreferences
 import com.github.yeetologist.githubusers.data.remote.response.ItemsItem
 import com.github.yeetologist.githubusers.databinding.ActivityMainBinding
 import com.github.yeetologist.githubusers.ui.adapter.SearchAdapter
 import com.github.yeetologist.githubusers.ui.viewmodel.MainViewModel
+import com.github.yeetologist.githubusers.ui.viewmodel.MainViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel by viewModels<MainViewModel>()
     private var query: String = ""
@@ -34,6 +43,9 @@ class MainActivity : AppCompatActivity() {
 
         setupRecyclerView()
 
+        val preferences = SettingPreferences.getInstance(dataStore)
+        val mainViewModel = ViewModelProvider(this, MainViewModelFactory(preferences))[MainViewModel::class.java]
+
         mainViewModel.listUsers.observe(this){
             setListUsers(it.peekContent())
         }
@@ -48,6 +60,11 @@ class MainActivity : AppCompatActivity() {
                     .show()
             }
             userCount = it.peekContent()
+        }
+
+        mainViewModel.getThemeSettings().observe(this@MainActivity) {
+            if (it) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
 
         binding.topAppBar.setOnMenuItemClickListener {

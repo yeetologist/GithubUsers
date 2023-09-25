@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import com.github.yeetologist.githubusers.data.SettingPreferences
 import com.github.yeetologist.githubusers.data.remote.response.ItemsItem
 import com.github.yeetologist.githubusers.data.remote.response.SearchResponse
 import com.github.yeetologist.githubusers.data.remote.retrofit.ApiConfig
@@ -12,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel : ViewModel() {
+class MainViewModel(private val pref: SettingPreferences) : ViewModel() {
 
     private val _resultCount = MutableLiveData<Event<Int>>()
     val resultCount: LiveData<Event<Int>> = _resultCount
@@ -50,5 +52,8 @@ class MainViewModel : ViewModel() {
                 Log.e(TAG, "onFailure: ${t.message}")
             }
         })
+    }
+    fun getThemeSettings(): LiveData<Boolean> {
+        return pref.getThemeSetting().asLiveData()
     }
 }

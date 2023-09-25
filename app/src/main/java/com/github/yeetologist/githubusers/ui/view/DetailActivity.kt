@@ -1,5 +1,7 @@
 package com.github.yeetologist.githubusers.ui.view
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -45,6 +47,8 @@ class DetailActivity : AppCompatActivity() {
             setDetailUser(it.peekContent())
             detailViewModel.getFavoriteById(it.peekContent().id).observe(this@DetailActivity){ entity ->
                 isFavorite = entity.isNotEmpty()
+                if (entity.isNotEmpty()) binding.fabFavorite.imageTintList = ColorStateList.valueOf(Color.rgb(255, 50, 50))
+                else binding.fabFavorite.imageTintList = ColorStateList.valueOf(Color.rgb(255, 255, 255))
             }
         }
 
