@@ -6,8 +6,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="tab_text_1">Following</string>
-    <string name="tab_text_2">Followers</string>
+    <string name="tab_text_1">FOLLOWING</string>
+    <string name="tab_text_2">FOLLOWERS</string>
     <string name="favorite">Favorite</string>
     <string name="key_dark">Dark Mode</string>
     <string name="dark_mode">Dark Mode</string>

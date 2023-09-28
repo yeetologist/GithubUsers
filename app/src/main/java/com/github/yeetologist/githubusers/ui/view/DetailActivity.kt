@@ -56,8 +56,6 @@ class DetailActivity : AppCompatActivity() {
             showLoading(it)
         }
 
-
-
         val sectionsPagerAdapter = SectionsPagerAdapter(this,intent.getStringExtra(EXTRA_LOGIN))
         val viewPager = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter
@@ -68,16 +66,11 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.elevation = 0f
 
         binding.fabFavorite.setOnClickListener {
-            val user = detailViewModel.detail.value?.peekContent()?.id?.let { it1 ->
-                detailViewModel.detail.value?.peekContent()?.login?.let { it2 ->
-                    detailViewModel.detail.value?.peekContent()?.htmlUrl?.let { it3 ->
-                        detailViewModel.detail.value?.peekContent()?.avatarUrl?.let { it4 ->
-                            FavoriteEntity(
-                                it1,
-                                it2,
-                                it3,
-                                it4
-                            )
+            val user = detailViewModel.detail.value?.peekContent()?.id?.let { id ->
+                detailViewModel.detail.value?.peekContent()?.login?.let { login ->
+                    detailViewModel.detail.value?.peekContent()?.htmlUrl?.let { htmlUrl ->
+                        detailViewModel.detail.value?.peekContent()?.avatarUrl?.let { avatarUrl ->
+                            FavoriteEntity(id, login, htmlUrl, avatarUrl)
                         }
                     }
                 }

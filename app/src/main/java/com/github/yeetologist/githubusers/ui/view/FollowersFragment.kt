@@ -49,7 +49,7 @@ class FollowersFragment : Fragment() {
         setupRecyclerView()
 
         if (!followersViewModel.isFunctionExecuted) {
-            followersViewModel.findFollowers(argLogin!!)
+            argLogin?.let { followersViewModel.findFollowers(it) }
             followersViewModel.isFunctionExecuted = true
         }
 
